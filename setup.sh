@@ -22,10 +22,16 @@ sudo apt install \
     jq \
     curl \
     fzf \
-    git
+    git \
+    flameshot
+
+# Flameshot
+# flameshot gui
 
 # fzf reverse search
 cat /usr/share/doc/fzf/README.Debian
+
+sudo snap install zoom-client signal-desktop
 
 # Install rust + fd-find + ripgrep
 
