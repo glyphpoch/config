@@ -1,0 +1,6 @@
+#
+# Startup application
+#
+
+    exec --no-startup-id $HOME/.local/bin/autostart_i3.sh
+

@@ -1,0 +1,19 @@
+profile allmonitors {
+  output eDP-1 disable
+  output DP-9 mode 2560x1600 position 1920,0
+  output DP-5 mode 1920x1080 position 4480,205
+}
+
+profile asusmissing {
+  output eDP-1 mode 1920x1200 position 0,0
+  output DP-9 mode 2560x1600 position 1920,0
+}
+
+profile dellmissing {
+  output eDP-1 mode 1920x1200 position 0,0
+  output DP-5 mode 1920x1080 position 1920,0
+}
+
+profile onlyinternal {
+  output eDP-1 mode 1920x1200 position 0,0
+}

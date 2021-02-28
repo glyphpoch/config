@@ -1,0 +1,111 @@
+#!/bin/bash
+
+set -ex
+
+case $1 in
+    default|secondary|internalonly)
+        # Get monitors
+        PRIMARY_MONITOR=$(i3-msg -t get_outputs | jq '.[] | select( .rect.height == 1080 and .name != "xroot-0") | .name')
+        SECONDARY_MONITOR=$(i3-msg -t get_outputs | jq '.[] | select( .rect.height == 1600 and .rect.width == 2560 and .name != "xroot-0") | .name')
+        INTERNAL_MONITOR=$(i3-msg -t get_outputs | jq '.[] | select( .rect.height == 1200 and .name != "xroot-0") | .name')
+
+        # Some simple error handling, expects the internal monitor to always be present
+        if [ -z $PRIMARY_MONITOR ] && [ -z $SECONDARY_MONITOR ];
+        then
+            PRIMARY_MONITOR=$INTERNAL_MONITOR
+            SECONDARY_MONITOR=$INTERNAL_MONITOR
+        fi
+
+        if [ -z $PRIMARY_MONITOR ] && [ -n $SECONDARY_MONITOR ];
+        then
+            PRIMARY_MONITOR=$SECONDARY_MONITOR
+        fi
+
+        if [ -n $PRIMARY_MONITOR ] && [ -z $SECONDARY_MONITOR ];
+        then
+            SECONDARY_MONITOR=$PRIMARY_MONITOR
+        fi
+
+        WM_NAME=i3
+        WM_NAGBAR=i3-nagbar
+        WM_MSG=i3-msg
+        WM_PROTOCOL=X
+        MODE_SWITCHER_SCRIPT='${HOME}/.config/i3/switch-i3-mode'
+        BAR_RESTART_SCRIPT='${HOME}/.config/polybar/launch.sh'
+
+        TEMPLATE_PATH=${HOME}/.config/wm-config-templates
+
+        # Make sure internal matches eDP-1
+        # TODO
+
+        # Backup previous config
+        mv ${HOME}/.config/i3/config ${HOME}/.config/i3/config.prev
+
+        # Write config
+        cd ${HOME}/.config/i3
+        echo "#" > config
+        echo "# Global monitor variables" >> config
+        echo "#" >> config
+
+        echo >> config
+
+        echo "    set \$primary_monitor $PRIMARY_MONITOR" >> config
+        echo "    set \$secondary_monitor $SECONDARY_MONITOR" >> config
+        echo "    set \$internal_monitor $INTERNAL_MONITOR" >> config
+        echo >> config
+
+        cat ${TEMPLATE_PATH}/00_global_vars >> config
+
+        echo "#" >> config
+        echo "# Other WM specific application variables" >> config
+        echo "#" >> config
+
+        echo >> config
+
+        echo "    set \$menu rofi -show drun -modi drun -theme gruvbox-dark" >> config
+
+        echo >> config
+
+        cat ${TEMPLATE_PATH}/01_i3_startup_apps >> config
+        cat ${TEMPLATE_PATH}/02_workspaces >> config
+
+        if [ $1 == default ]; then
+            cat ${TEMPLATE_PATH}/05_default_keybindings \
+                | sed s/MSG_WM_REPLACE/${WM_MSG}/g \
+                | sed s+MODE_SWITCHER_REPLACE+${MODE_SWITCHER_SCRIPT}+g \
+                | sed s+BAR_RESTART_REPLACE+${BAR_RESTART_SCRIPT}+g \
+                >> config
+        elif [ $1 == secondary ]; then
+            cat ${TEMPLATE_PATH}/05_secondary_keybindings \
+                | sed s/MSG_WM_REPLACE/${WM_MSG}/g \
+                | sed s+MODE_SWITCHER_REPLACE+${MODE_SWITCHER_SCRIPT}+g \
+                | sed s+BAR_RESTART_REPLACE+${BAR_RESTART_SCRIPT}+g \
+                >> config
+        else
+            cat ${TEMPLATE_PATH}/05_internalonly_keybindings \
+                | sed s/MSG_WM_REPLACE/${WM_MSG}/g \
+                | sed s+MODE_SWITCHER_REPLACE+${MODE_SWITCHER_SCRIPT}+g \
+                | sed s+BAR_RESTART_REPLACE+${BAR_RESTART_SCRIPT}+g \
+                >> config
+        fi
+
+        cat ${TEMPLATE_PATH}/06_global_keybindings \
+            | sed s/NAGBAR_REPLACE/${WM_NAGBAR}/g \
+            | sed s/MSG_WM_REPLACE/${WM_MSG}/g \
+            | sed s/WM_NAME_REPLACE/${WM_NAME}/g \
+            | sed s/WM_PROTOCOL_REPLACE/${WM_PROTOCOL}/g \
+            >> config
+
+        cat ${TEMPLATE_PATH}/07_colour_scheme >> config
+
+        cat ${TEMPLATE_PATH}/08_polybar >> config
+
+        echo -n $1 > ${HOME}/.config/i3/state
+
+        ;;
+    *)
+        # Any other argument is invalid
+        exit 1
+        ;;
+esac
+    

@@ -1,0 +1,30 @@
+#
+# Global Variables
+#
+
+    # Mod1 = Alt, Mod4 = Logo Key
+    set $mod Mod1
+    
+    # Home row direction keys, like vim
+    set $left h
+    set $down j
+    set $up k
+    set $right l
+    
+    # Default terminal emulator
+    set $term gnome-terminal
+    
+    # Default application launcher
+    # Note: pass the final command to swaymsg so that the resulting window can be opened
+    # on the original workspace that the command was run on.
+    set $menu wofi
+    
+    # Monitor definitions, a_monitor, d_monitor and laptop_monitor vars will be set by the config regen script
+    set $primary_monitor $a_monitor
+    set $secondary_monitor $d_monitor
+    set $internal_monitor $laptop_monitor
+
+    # XXX Move this out of here
+    # Disable moving/resizing while holding down mod and left/right click
+    floating_modifier none
+

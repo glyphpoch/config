@@ -1,0 +1,7 @@
+#
+# Input Configuration
+#
+
+    # Set keyboard layout
+    input * xkb_layout gb
+

@@ -1,0 +1,64 @@
+#!/bin/bash
+
+set -ex
+
+case $1 in
+    default|secondary|internalonly)
+        # Make sure the sway socket is available first
+        if [ -z $SWAYSOCK ]; then
+            export SWAYSOCK="/run/user/$(id -u)/sway-ipc.$(id -u).$(pidof sway).sock"
+
+            # Abort if the socket doesn't exist
+            if [ ! -S $SWAYSOCK ]; then
+                exit 1
+            fi
+        fi
+
+        # Get monitors
+        PRIMARY_MONITOR=$(swaymsg -t get_outputs | jq -c '.[] | select( .make == "Ancor Communications Inc" ) | .name')
+        SECONDARY_MONITOR=$(swaymsg -t get_outputs | jq -c '.[] | select( .make == "Dell Inc." or .model == "DELL U3014" ) | .name')
+        INTERNAL_MONITOR=$(swaymsg -t get_outputs | jq -c '.[] | select( .make == "Sharp Corporation" ) | .name')
+
+        # Make sure internal matches eDP-1
+        # TODO
+
+        # Backup previous config
+        mv $HOME/.config/sway/config $HOME/.config/sway/config.prev
+
+        # Write config
+        cd $HOME/.config/sway
+        echo "#" > config
+        echo "# Global monitor variables" >> config
+        echo "#" >> config
+
+        echo >> config
+
+        echo "    set \$a_monitor $PRIMARY_MONITOR" >> config
+        echo "    set \$d_monitor $SECONDARY_MONITOR" >> config
+        echo "    set \$laptop_monitor $INTERNAL_MONITOR" >> config
+
+        echo >> config
+
+        cat config.d/00_global_vars >> config
+        cat config.d/01_workspaces >> config
+        cat config.d/02_outputs >> config
+        cat config.d/03_inputs >> config
+
+        if [ $1 == default ]; then
+            cat config.d/04_default_keybindings >> config
+        elif [ $1 == secondary ]; then
+            cat config.d/04_secondary_keybindings >> config
+        else
+            cat config.d/04_internalonly_keybindings >> config
+        fi
+
+        cat config.d/05_global_keybindings >> config
+        cat config.d/07_waybar >> config
+
+        ;;
+    *)
+        # Anything other argument is invalid
+        exit 1
+        ;;
+esac
+    

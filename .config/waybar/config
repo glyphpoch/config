@@ -1,0 +1,47 @@
+{
+    "layer": "top",
+    "height": 32,
+    "modules-left": ["sway/workspaces", "sway/mode"],
+    "modules-center": ["sway/window"],
+    "modules-right": ["network", "cpu", "memory", "battery", "clock"],
+    "sway/workspaces": {
+        "all-outputs": false,
+        "format": "{name}",
+        "current-only": false
+    },
+    "sway/mode": {
+        "format": "<span style=\"italic\">{}</span>"
+    },
+    "sway/window": {
+        "max-length": 50
+    },
+    "network": {
+        "format-wifi": "{signalStrength}%  ",
+        "format-ethernet": "{ifname}: {ipaddr}/{cidr} ",
+        "format-disconnected": "Disconnected  "
+    },
+    "pulseaudio": {
+        "format": "{volume}% "
+    },
+    "memory": {
+        "format": "{percentage}%  ",
+        "interval": 30
+    },
+    "cpu": {
+        "format": "{usage}%  ",
+        "interval": 15
+    },
+    "battery": {
+        "format": "{capacity}% {icon}",
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format-icons": [" ", " ", " ", " ", " "],
+        "interval": 600
+    },
+    "clock": {
+        "interval": 1,
+        "format": "{:%Y-%m-%d %H:%M:%S}"
+    }
+}

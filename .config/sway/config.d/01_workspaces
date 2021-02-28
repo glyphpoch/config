@@ -1,0 +1,55 @@
+#
+# Workspace Configuration
+#
+
+    # Default mode workspaces
+    set $ws1  1:1
+    set $ws2  2:2
+    set $ws3  3:3
+    set $ws4  4:4
+    set $ws5  5:5
+    set $ws6  6:6
+    set $ws7  7:7
+    set $ws8  8:8
+    set $ws9  9:9
+    set $ws10 10:10
+
+    set $ws11 11:1
+    set $ws12 12:2
+    set $ws13 13:3
+    set $ws14 14:4
+    set $ws15 15:5
+
+    set $ws16 16:1
+    set $ws17 17:2
+    set $ws18 18:3
+    set $ws19 19:4
+    set $ws20 20:5
+
+    workspace $ws1  output $primary_monitor
+    workspace $ws2  output $primary_monitor
+    workspace $ws3  output $primary_monitor
+    workspace $ws4  output $primary_monitor
+    workspace $ws5  output $primary_monitor
+
+    workspace $ws6  output $secondary_monitor
+    workspace $ws7  output $secondary_monitor
+    workspace $ws8  output $secondary_monitor
+
+    workspace $ws9  output $internal_monitor
+    workspace $ws10 output $internal_monitor
+
+    # Secondary mode workspaces
+    workspace $ws11 output $secondary_monitor
+    workspace $ws12 output $secondary_monitor
+    workspace $ws13 output $secondary_monitor
+    workspace $ws14 output $secondary_monitor
+    workspace $ws15 output $secondary_monitor
+
+    # Internal only mode workspaces
+    workspace $ws16 output $internal_monitor
+    workspace $ws17 output $internal_monitor
+    workspace $ws18 output $internal_monitor
+    workspace $ws19 output $internal_monitor
+    workspace $ws20 output $internal_monitor
+

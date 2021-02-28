@@ -1,0 +1,111 @@
+/* Ubuntu colours */
+@define-color ubuntu_orange #e95420;
+@define-color light_aubergine #77216f;
+@define-color mid_aubergine #532750;
+@define-color dark_aubergine #2c001e;
+
+@define-color warm_grey #aea79f;
+@define-color cool_grey #333333;
+@define-color text_grey #111111;
+
+@define-color canonical_aubergine #772953;
+
+* {
+    border: none;
+    border-radius: 0;
+    font-family: "Font Awesome 5 Free";
+    font-size: 15px;
+    min-height: 0;
+}
+
+window#waybar {
+    background: rgba(44, 0, 30, 0.3); /* @dark_aubergine; */
+    color: white;
+}
+
+#window {
+    font-weight: bold;
+    font-family: "Ubuntu";
+}
+
+/*
+#workspaces {
+    padding: 0 5px;
+}
+*/
+
+#workspaces button {
+    padding: 0 5px;
+    background: transparent;
+    font-weight: bold;
+    color: white;
+    border-top: 2px solid transparent;
+}
+
+#workspaces button.focused {
+    /* color: #c9545d; */
+    color: @ubuntu_orange;
+    border-top: 2px solid @ubuntu_orange;
+}
+
+#mode {
+    background: #64727D;
+    padding: 15px;
+    border-bottom: 3px solid @ubuntu_orange;
+}
+
+#clock, #battery, #cpu, #memory, #network, #pulseaudio, #custom-spotify, #tray, #mode {
+    padding: 0 3px;
+    margin: 0 2px;
+}
+
+#clock {
+    font-weight: bold;
+}
+
+#battery icon {
+    color: red;
+}
+
+#battery.charging {
+}
+
+@keyframes blink {
+    to {
+        background-color: #ffffff;
+        color: black;
+    }
+}
+
+#battery.warning:not(.charging) {
+    color: white;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+#cpu {
+}
+
+#memory {
+}
+
+#network {
+}
+
+#network.disconnected {
+    background: #f53c3c;
+}
+
+#pulseaudio {
+}
+
+#pulseaudio.muted {
+}
+
+#tray {
+}
+
+

@@ -1,0 +1,28 @@
+#
+# Keybindings specific to internal-only mode
+#
+
+#
+# Workspaces
+#
+
+    # Switch to workspace
+    bindsym $mod+1 workspace $ws16
+    bindsym $mod+2 workspace $ws17
+    bindsym $mod+3 workspace $ws18
+    bindsym $mod+4 workspace $ws19
+    bindsym $mod+5 workspace $ws20
+
+    # Move focused container to workspace
+    bindsym $mod+Shift+1 move container to workspace $ws16
+    bindsym $mod+Shift+2 move container to workspace $ws17
+    bindsym $mod+Shift+3 move container to workspace $ws18
+    bindsym $mod+Shift+4 move container to workspace $ws19
+    bindsym $mod+Shift+5 move container to workspace $ws20
+
+#
+# Mode switch
+#
+
+    bindsym $mod+Tab exec "switch-sway-mode default && swaymsg reload"
+

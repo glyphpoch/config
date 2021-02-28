@@ -1,0 +1,16 @@
+#
+# Global Variables
+#
+
+    # Mod1 = Alt, Mod4 = Logo Key
+    set $mod Mod1
+    
+    # Home row direction keys, like vim
+    set $left h
+    set $down j
+    set $up k
+    set $right l
+    
+    # Default terminal emulator
+    set $term alacritty
+

@@ -1,0 +1,280 @@
+;---------------------------
+; Bar configuration
+;---------------------------
+
+[bar/main]
+monitor = ${env:MONITOR:}
+
+bottom = false
+
+width = 100%
+height = 32
+
+font-0 = NotoSans-Regular:size=14;2
+font-1 = FontAwesome:pixelsize=14;2
+
+module-margin-right = 2
+modules-left = i3 wmstate
+modules-center = title
+modules-right = wireless-network cpu memory battery xkeyboard date
+
+; Background ARGB color (e.g. #f00, #ff992a, #ddff1023)
+background = ${color.bg}
+
+; Foreground ARGB color (e.g. #f00, #ff992a, #ddff1023)
+foreground = ${color.fg}
+
+;---------------------------
+; Settings
+;---------------------------
+[settings]
+; Reload upon receiving XCB_RANDR_SCREEN_CHANGE_NOTIFY events
+screenchange-reload = false
+
+;---------------------------
+; Colors
+;---------------------------
+[color]
+
+;; Active Colors
+bg = #40000000
+fg = #EAEAEA
+fg-alt = #9C9C9C
+
+trans = #00000000
+white = #FFFFFF
+black = #000000
+
+;; Material Colors
+
+red = #e53935
+pink = #d81b60
+purple = #8e24aa
+deep-purple = #5e35b1
+indigo = #3949ab
+blue = #1e88e5
+light-blue = #039be5
+cyan = #00acc1
+teal = #00897b
+green = #43a047
+light-green = #7cb342
+lime = #c0ca33
+yellow = #fdd835
+amber = #ffb300
+orange = #fb8c00
+deep-orange = #f4511e
+brown = #6d4c41
+grey = #757575
+blue-gray = #546e7a
+
+;---------------------------
+; Module configuration
+;---------------------------
+[module/i3]
+type = internal/i3
+
+; Only show workspaces defined on the same output as the bar
+;
+; Useful if you want to show monitor specific workspaces
+; on different bars
+;
+; Default: false
+pin-workspaces = true
+
+; This will split the workspace name on ':'
+; Default: false
+strip-wsnumbers = true
+
+; Sort the workspaces by index instead of the default
+; sorting that groups the workspaces by output
+; Default: false
+index-sort = true
+
+; Create click handler used to focus workspace
+; Default: true
+enable-click = true
+
+; Create scroll handlers used to cycle workspaces
+; Default: true
+enable-scroll = true
+
+; Wrap around when reaching the first/last workspace
+; Default: true
+wrapping-scroll = false
+
+; Set the scroll cycle direction 
+; Default: true
+reverse-scroll = false
+
+label-unfocused-background = ${color.bg}
+label-unfocused-foreground = ${color.fg}
+
+label-mode = %mode%
+label-mode-padding = 2
+label-mode-background = ${color.bg}
+
+label-focused = %index%
+label-focused-foreground = ${color.fg}
+label-focused-background = #5E2750
+label-focused-underline = ${color.fg}
+label-focused-padding = 2
+
+label-unfocused = %index%
+label-unfocused-padding = 2
+
+label-visible = %index%
+label-visible-underline = ${color.fg}
+label-visible-padding = 2
+
+label-urgent = %index%
+label-urgent-foreground = #2C001E
+label-urgent-background = #E95420
+label-urgent-underline = ${color.fg}
+label-urgent-padding = 2
+
+[module/title]
+type = internal/xwindow
+
+label-maxlen = 50
+
+[module/battery]
+type = internal/battery
+
+; This is useful in case the battery never reports 100% charge
+full-at = 94
+
+; Use the following command to list batteries and adapters:
+; $ ls -1 /sys/class/power_supply/
+battery = BAT0
+adapter = AC
+
+; If an inotify event haven't been reported in this many
+; seconds, manually poll for new values.
+;
+; Needed as a fallback for systems that don't report events
+; on sysfs/procfs.
+;
+; Disable polling by setting the interval to 0.
+;
+; Default: 5
+poll-interval = 120
+
+format-charging = <label-charging> <ramp-capacity>
+format-discharging = <label-discharging> <ramp-capacity>
+format-full = <label-full> <ramp-capacity>
+
+label-charging = %percentage%%
+label-discharging = %percentage%%
+label-full = %percentage%%
+
+; Only applies if <ramp-capacity> is used
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+
+[module/cpu]
+type = internal/cpu
+
+; Seconds to sleep between updates
+; Default: 1
+interval = 1
+
+format = <label>
+label = %percentage%% 
+
+[module/date]
+type = internal/date
+
+; Seconds to sleep between updates
+; Default: 1.0
+interval = 1.0
+
+; See "https://en.cppreference.com/w/cpp/io/manip/put_time" for details on how to format the date string
+; NOTE: if you want to use syntax tags here you need to use %%{...}
+date = %a, %m %b %Y %H:%M:%S
+
+; Optional time format
+; time = %H:%M:%S
+
+; if `date-alt` or `time-alt` is defined, clicking
+; the module will toggle between formats
+; date-alt = %A, %d %B %Y
+; time-alt = %H:%M:%S
+
+[module/memory]
+type = internal/memory
+
+; Seconds to sleep between updates
+; Default: 1
+interval = 3
+
+format = <label>
+label = %gb_used%/%gb_total% 
+
+[module/wireless-network]
+type = internal/network
+interface = wlp0s20f3
+
+format-connected = <label-connected>
+label-connected = %signal% 
+
+format-disconnected = <label-disconnected>
+label-disconnected = Disconnected 
+
+; Seconds to sleep between updates
+; Default: 1
+interval = 5.0
+
+[module/temperature]
+type = internal/temperature
+
+; Seconds to sleep between updates
+; Default: 1
+interval = 2
+
+; Thermal zone to use
+; To list all the zone types, run 
+; $ for i in /sys/class/thermal/thermal_zone*; do echo "$i: $(<$i/type)"; done
+; Default: 0
+thermal-zone = 0
+
+; Full path of temperature sysfs path
+; Use `sensors` to find preferred temperature source, then run
+; $ for i in /sys/class/hwmon/hwmon*/temp*_input; do echo "$(<$(dirname $i)/name): $(cat ${i%_*}_label 2>/dev/null || echo $(basename ${i%_*})) $(readlink -f $i)"; done
+; to find path to desired file
+; Default reverts to thermal zone setting
+hwmon-path = /sys/devices/platform/coretemp.0/hwmon/hwmon3/temp1_input
+
+; Base temperature for where to start the ramp (in degrees celsius)
+; Default: 0
+base-temperature = 0
+
+; Threshold temperature to display warning label (in degrees celsius)
+; Default: 80
+warn-temperature = 60
+
+[module/xkeyboard]
+type = internal/xkeyboard
+
+[module/wmstate]
+type = custom/script
+
+; Available tokens:
+;   %counter%
+; Command to be executed (using "/bin/sh -c [command]")
+exec = cat ${HOME}/.config/i3/state
+
+; Conditional command that, if defined, needs to exit successfully
+; before the main exec command is invoked.
+; Default: ""
+exec-if = if grep -q default ${HOME}/.config/i3/state; then exit 1; fi
+
+; Will the script output continous content?
+; Default: false
+tail = false
+
+; Seconds to sleep between updates
+; Default: 5 (0 if `tail = true`)
+interval = 90
