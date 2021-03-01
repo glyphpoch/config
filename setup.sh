@@ -38,6 +38,15 @@ sudo snap install zoom-client signal-desktop
 # Temp notification
 # sensors -j | jq '."coretemp-isa-0000"."Package id 0"."temp1_input"'
 
+# vim-plug for nvim
+# sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+#     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+
+# vim-plug for vim
+# curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+#     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+#
+
 
 # Backup
 # cp ~/setup.sh ./
