@@ -47,6 +47,9 @@ sudo snap install zoom-client signal-desktop
 #     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 #
 
+# Clipboard manager
+# rofi -lines 12 -padding 18 -width 60 -location 0 -show drun -sidebar-mode -columns 3 -font 'Noto Sans 8' -modi drun,"clipboard:greenclip print"
+
 
 # Backup
 # cp ~/setup.sh ./
